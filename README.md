@@ -42,4 +42,4 @@ http://x10linux.blogspot.hu/2012/08/installing-heyu-on-raspberry-pi.html
 I've chosen a more lightweight server instead of apache. It has php/cgi addon and also mysql support
 Install instructions here:
 http://www.everydaylinuxuser.com/2013/06/setting-up-personal-web-server-on.html
-
+PhpMyadmin will come handy when handling the databases.
