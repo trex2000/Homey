@@ -16,7 +16,7 @@
 /*login defines*/
 #define MYSQL_HOST			"localhost"
 #define MYSQL_USERNAME		"root"
-#define MYSQL_PASSWORD      "l3dyh@wk3"
+#define MYSQL_PASSWORD      "PASSWORD_TO_BE_FILLED"
 #define MYSQL_DB 			"homey"
 #define MYSQL_TABLE_NAME	"devices"
 
