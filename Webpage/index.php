@@ -178,6 +178,20 @@ if ( (isset($_POST['action'])) && ($_POST['action'] == 'submitted') && (!isset($
 		{
 			//no thing
 		}
+		//insert into log
+		$query_string =" INSERT INTO log (Deviceid, LastState, LastModified) VALUES (".$modified[$i]['id'].",".$modified[$i]['newstatus'].",".time().")";
+		//echo "Update query string for log: ".$query_string;
+		//echo "<BR>";
+		$result = mysqli_query($con,$query_string);
+		if (!$result)
+		{
+			write_to_log(LOG_ERR, "Query failed. Error:".mysqli_error($con),1);
+		}
+		else
+		{
+			//no thing
+		}
+		
 		
 	}
 	
@@ -213,11 +227,11 @@ if ( (isset($_POST['action'])) && ($_POST['action'] == 'submitted') && (!isset($
 		//call shell app
 		if ($row['LastState'])
 		{
-			$shell_exec = "/var/www/execheyu.sh on ".$x10command;
+			$shell_exec = "/var/www/html/execheyu.sh on ".$x10command;
 		}
 		else
 		{
-			$shell_exec = "/var/www/execheyu.sh off ".$x10command;
+			$shell_exec = "/var/www/html/execheyu.sh off ".$x10command;
 		}
 		write_to_log (LOG_INFO, $shell_exec,0);
 		$resp = shell_exec($shell_exec);
@@ -225,7 +239,7 @@ if ( (isset($_POST['action'])) && ($_POST['action'] == 'submitted') && (!isset($
 		if ($row['SupportsStatus'])
 		{
 			write_to_log (LOG_INFO, "Reading back the status:",1);
-			$shell_exec = "/var/www/heyustatus.sh ".$x10command;
+			$shell_exec = "/var/www/html/heyustatus.sh ".$x10command;
 			write_to_log(LOG_INFO, $shell_exec,1);
 			//TODO:  modify back the lsat status in case the status command is		 incorrect. 
 			//TODO:  check how does the heyu status response command look like			

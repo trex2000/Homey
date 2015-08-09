@@ -1,0 +1,14 @@
+[Unit]
+Description=mochad
+After=network.target
+
+[Service]
+Type=forking
+PIDFile=/run/mochad.pid
+ExecStart=/usr/local/bin/oscam mochad
+ExecStop=/usr/bin/rm /run/mochad.pid
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target	

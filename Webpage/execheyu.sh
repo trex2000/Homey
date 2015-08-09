@@ -1,3 +1,3 @@
 echo Executing shell script
-/usr/local/bin/heyu $1 $2
+echo "pl $2 $1" | nc localhost 1099 -q 5
  
