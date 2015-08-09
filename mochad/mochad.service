@@ -1,14 +1,13 @@
-[Unit]
-Description=mochad
-After=network.target
+[[Unit]
+Description=Mochad X10 Daemon
+Requires=systemd-udevd.service
+After=systemd-udevd.service
 
 [Service]
 Type=forking
-PIDFile=/run/mochad.pid
-ExecStart=/usr/local/bin/oscam mochad
-ExecStop=/usr/bin/rm /run/mochad.pid
-Restart=always
-RestartSec=5
+GuessMainPID=yes
+ExecStart=/usr/local/bin/mochad
+Restart=on-abort
 
 [Install]
-WantedBy=multi-user.target	
+WantedBy=multi-user.target
