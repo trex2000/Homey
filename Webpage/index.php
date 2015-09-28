@@ -1,10 +1,27 @@
-<html>
-<img src="/img/homey.png" alt="Homey">
-<body background="/img/images.jpg	"> 
-<?php
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Barnikanak a Homey-a">
+	<meta name="keywords" content="Barni, Barnika, Barney, Homey">
+	<meta name="author" content="Csakis Barney">
+
+	<title>Homey</title>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" href="style.css">
+
+  </head>
+  <body>
+  <div><img src="/img/homey.png" alt="Homey"></div>
+
+  <?php
 require_once('config.inc.php');
 error_reporting(E_ALL);
-//nummber of seconds to wait between 2 consecutive commands
+//number of seconds to wait between 2 consecutive commands
 define("SECONDS_MIN", 10); 
 
 
@@ -284,39 +301,52 @@ else
 	$result = mysqli_query($con,"SELECT * FROM devices");
 	
 	echo "<form method='post' action='$PHP_SELF'>";
-	echo "<font color='#1199CC'><H3>Configured devices:</H3></font>";
+	echo "<font color='#1199CC'><h3>Configured devices:</h3></font>";
 	echo "<br>";
+	echo '<div class="container-fluid">';
+	echo '<div class="row">';
 	while($row = mysqli_fetch_array($result))
 	{
-		echo "<font color='#0099CC'><H4>".$row['Name']."</H4></font>";
+		echo '<div class="col-md-4">';
+		echo "<h4>".$row['Name']."</h4>";
+		echo '<p class="text-primary">';
 		echo "- device id: ".$row['id'];
-		echo "<br>";
+		echo '</p>';
+		echo '<p class="text-primary">';
 		echo "- house/unit Code: ".$row['Housecode'].$row['Unitcode'];
-		echo "<br>";
-		echo "- last known state: ";
+		echo "</p>";
+		echo '<p class="text-primary">- last known state: ';
 		if ($row['LastState'])
 		{
+			echo '<span class="text-success">';
 			echo "On";
+			echo '</span></p>';
 		}
 		else
 		{
+			echo '<span class="text-danger">';
 			echo "Off";
+			echo '</span></p>';
 		}
-		echo "<br>";
+		echo '<p class="text-primary">';
 		echo "- last modified: ";
 		echo gmdate("Y-m-d H:i:s ", $row['LastModified']);
 		echo " (GMT)";
-		echo "<br>";
-		echo "- supports status query: ";
+		echo '</p>';
+		
+		echo '<p class="text-primary">- supports status query: ';
 		if ($row['SupportsStatus'])
 		{
+			echo '<span class="text-success">';
 			echo "Yes";
+			echo '</span></p>';
 		}
 		else
 		{
+			echo '<span class="text-danger">';
 			echo "no";
+			echo '</span></p>';
 		}
-		echo "<br>";
 		// populate radio button
 		if ($row['LastState'])
 		{
@@ -328,16 +358,25 @@ else
 			$button_checked_off="checked";//nothing
 			$button_checked_on="";
 		}
-		echo "<input type='radio' name='Status".$row['id']."' value='1' ".$button_checked_on."> On";
-		echo "<input type='radio' name='Status".$row['id']."' value='0' ".$button_checked_off."> Off";
+		echo "<label class='radio-inline'>";
+			echo "<input type='radio' name='Status".$row['id']."' value='1' ".$button_checked_on."> On";
+		echo "</label>";
+		echo "<label class='radio-inline'>";
+			echo "<input type='radio' name='Status".$row['id']."' value='0' ".$button_checked_off."> Off";
+		echo "</label>";
 		echo "<br>";
-		echo "<input type='submit' name='Submit".$row['id']."' value='Modify'>";
+		echo "<button type='submit' class='btn btn-primary' name='Submit".$row['id']."'>Modify</button>";
+		echo "</div>";
 	}
+	echo "</div>";
 	mysqli_close($con);
-	echo "<br><br><br>";
-	echo "<input type='checkbox' name='force_update' value='1' /> force status update regardless of last state or last time of update";
+	echo "</div>";
+	echo "<label class='checkbox-inline'>";
+		echo "<input type='checkbox' name='force_update' value='1'> force status update regardless of last state or last time of update";
+	echo "</label>";
 	echo "<input type='hidden' name='action' value='submitted'>";
 	echo "</FORM>";
 }
 ?>
+  </body>
 </html>
