@@ -1,0 +1,13 @@
+[[Unit]
+Description=Homey X10 Daemon
+Requires=systemd-udevd.service
+After=systemd-udevd.service
+
+[Service]
+Type=forking
+GuessMainPID=yes
+ExecStart=/usr/local/bin/homey
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
